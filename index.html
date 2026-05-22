@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYPES 數位消費人格測驗 | MarTech 大腦決策濾鏡</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="logo">🧠 TYPES 數位消費人格</div>
+        <button id="secret-btn" class="backend-toggle-btn" onclick="toggleDashboard()">⚙️ MarTech 後台管理系統</button>
+    </header>
+
+    <main class="main-content">
+        <div id="app-container">
+            
+            <div id="welcome-screen" class="screen active">
+                <div class="app-tag">MARTECH PERSONA PROTOTYPE</div>
+                <h1 class="welcome-title">解密你的數位分身！</h1>
+                <p class="welcome-subtitle">每天面對上萬則廣告，你的大腦如何過濾行銷訊號？本測驗以 <strong>4 種行銷心理學原型</strong>為基底，5 題情境解碼你潛意識中的決策精靈 IP。</p>
+                
+                <div class="badge-group">
+                    <span class="custom-badge badge-purple">建立於行銷心理學原型 — 衝動 / 理性 / 社群 / 價值</span>
+                    <span class="custom-badge badge-gray">本測驗為 MarTech 課程教學原型，非商業 CRM 工具</span>
+                </div>
+
+                <button class="primary-btn launch-btn" onclick="startQuiz()">立即開始測驗 →</button>
+                
+                <div class="welcome-footer">
+                    <span>⚡ 約 60 秒</span>
+                    <span>📊 4 種 IP 人格</span>
+                    <span>🎁 專屬優惠</span>
+                </div>
+            </div>
+
+            <div id="quiz-screen" class="screen">
+                <div class="quiz-header">
+                    <span id="story-context" class="story-context">情境載入中...</span>
+                    <div class="progress-container">
+                        <div class="progress-text">測驗進度 <span id="progress-num">0</span>%</div>
+                        <div class="progress-bar-bg">
+                            <div id="progress-bar" class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <h2 id="question-text" class="question-title">題目載入中...</h2>
+                <div id="options-container" class="options-grid"></div>
+            </div>
+
+            <div id="loading-screen" class="screen">
+                <div class="ai-loader">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+                <h2 class="loading-title">正在生成數位分身 IP...</h2>
+                <p class="loading-subtitle">MarTech 演算法正在交叉解析你的行銷濾鏡與決策基因</p>
+            </div>
+
+            <div id="result-screen" class="screen">
+                <div id="result-card" class="mbti-result-card">
+                    <div class="card-glow"></div>
+                    <div class="ip-header">
+                        <span id="ip-name" class="ip-badge-label">TYPES IP</span>
+                        <span class="mbti-code">MARTECH PRO</span>
+                    </div>
+                    <div id="result-avatar" class="ip-illustration">✨</div>
+                    <h2 id="result-title" class="ip-title">人格類型</h2>
+                    <p id="result-desc" class="ip-description">性格描述載入中...</p>
+                </div>
+                
+                <div class="analytics-box">
+                    <span class="chart-icon">📊</span>
+                    <p>大數據對比：全網僅有 <span id="stat-percent" class="highlight-text">15%</span> 的受測者同屬這個數位分身！</p>
+                </div>
+
+                <div class="crm-conversion-box">
+                    <h3 class="crm-title">🎯 MarTech 演算精準推薦</h3>
+                    <p class="crm-subtitle">最容易打動你的品牌調性與命定選物：<br><strong id="reco-product" class="product-highlight">品牌名稱</strong></p>
+                    <div class="crm-actions">
+                        <button class="coupon-btn animate-pulse" onclick="copyCoupon()">1. 領取合作專屬優惠券 🎁</button>
+                        <button id="brand-link-btn" class="brand-redirect-btn" onclick="goToBrandSite()">2. 前往 <span id="brand-name">品牌</span> 官方網站 🚀</button>
+                    </div>
+                </div>
+
+                <div class="share-actions-grid">
+                    <button class="share-btn btn-outline" onclick="alert('已複製專屬雙人對比連結！快去邀請好友測試大腦契合度。')">🔗 邀請好友比對</button>
+                    <button class="share-btn btn-instagram" onclick="alert('圖卡已優化為 9:16 規格，準備發布至 Instagram 限時動態！')">📱 分享至 IG 限動</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="dashboard-screen" class="screen dashboard-view">
+        <div class="dashboard-container">
+            <div class="dash-navbar">
+                <div class="dash-brand">📊 MarTech 智能整合數據控制台 (2026 數位行銷趨勢版)</div>
+                <button class="dash-exit-btn" onclick="toggleDashboard()">返回前台</button>
+            </div>
+            
+            <div class="kpi-matrix">
+                <div class="kpi-item">
+                    <div class="kpi-info">
+                        <span class="kpi-title">漏斗頂端：總流量 (Traffic)</span>
+                        <span id="dash-impressions" class="kpi-num">1,245</span>
+                    </div>
+                    <div class="kpi-trend">曝光人次</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-info">
+                        <span class="kpi-title">互動層：第一方標籤 (Leads)</span>
+                        <span id="dash-completions" class="kpi-num">890</span>
+                    </div>
+                    <div id="dash-completion-rate-badge" class="kpi-trend up">71.5%</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-info">
+                        <span class="kpi-title">轉換層：外部跳轉 (Conversion)</span>
+                        <span id="dash-clicks" class="kpi-num">320</span>
+                    </div>
+                    <div class="kpi-trend">意向點擊</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-info">
+                        <span class="kpi-title">最終跨站點擊率 (CTR)</span>
+                        <span id="dash-cvr" class="kpi-num">35.9%</span>
+                    </div>
+                    <div id="dash-cvr-badge" class="kpi-trend up">健康</div>
+                </div>
+            </div>
+
+            <div class="dash-section-title">🤖 趨勢一：AI 行銷應用 (AI Marketing Engine)</div>
+            <div class="dash-ai-insight-panel">
+                <div class="insight-body-grid">
+                    <div class="insight-card border-purple">
+                        <h4 class="insight-card-title">🔍 AI 顧客分析 & 行銷心理學診斷</h4>
+                        <p id="ai-customer-analysis" class="insight-text">正在交叉解讀消費者潛意識決策特徵...</p>
+                    </div>
+                    <div class="insight-card border-purple">
+                        <h4 class="insight-card-title">💬 AI Chatbot 聊天機器人分眾對話腳本推薦</h4>
+                        <p id="ai-chatbot-script" class="insight-text">正在自動生成 LINE/Instagram 導流對話策略...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-section-title">🌐 趨勢二：新網路行銷組合 (Modern Digital Marketing Mix)</div>
+            <div class="dash-martech-grid">
+                
+                <div class="martech-card">
+                    <div class="card-header-icon">📈</div>
+                    <h4 class="martech-card-title">生成式引擎優化 (GEO) & SEO 內容核心</h4>
+                    <p class="martech-meta-desc">因應 ChatGPT / SearchGPT / Perplexity 等 AI 搜尋時代的流量佈局。</p>
+                    <div class="strategy-box">
+                        <h5>📍 GEO 引擎權重優化焦點（AI 最愛引用的結構）</h5>
+                        <ul id="geo-strategy-list" class="strategy-list"></ul>
+                    </div>
+                    <div class="strategy-box">
+                        <h5>✍️ 內容行銷與關鍵字佈局 (SEO)</h5>
+                        <ul id="seo-strategy-list" class="strategy-list"></ul>
+                    </div>
+                </div>
+
+                <div class="martech-card">
+                    <div class="card-header-icon">🎯</div>
+                    <h4 class="martech-card-title">SEM 搜尋引擎行銷 & Google AdWords 部署</h4>
+                    <p class="martech-meta-desc">基於當前 Zero-Party Data 數據占比優化獲客成本 (CPA)。</p>
+                    <div class="strategy-box">
+                        <h5>💰 Google AdWords 智慧出價與受眾權重建議</h5>
+                        <ul id="sem-bidding-strategy" class="strategy-list"></ul>
+                    </div>
+                    <div class="strategy-box">
+                        <h5>📝 高轉換文案範本 (Ad Copywriting)</h5>
+                        <div id="sem-ad-copy" class="ad-copy-preview"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dash-section-title">📊 基礎底層數據看板 (Data Analytics Matrix)</div>
+            <div class="dash-charts-grid">
+                <div class="dash-chart-card">
+                    <h4 class="chart-title">Zero-Party Data 顧客消費人格分佈矩陣</h4>
+                    <div class="modern-bar-chart">
+                        <div class="chart-bar-wrapper">
+                            <div id="bar-impulse" class="bar-fill bar-impulse"></div>
+                            <span id="label-impulse" class="bar-label">多巴胺<br>--%</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div id="bar-rational" class="bar-fill bar-rational"></div>
+                            <span id="label-rational" class="bar-label">解碼者<br>--%</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div id="bar-social" class="bar-fill bar-social"></div>
+                            <span id="label-social" class="bar-label">共振儀<br>--%</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div id="bar-loyal" class="bar-fill bar-loyal"></div>
+                            <span id="label-loyal" class="bar-label">守護者<br>--%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-chart-card">
+                    <h4 class="chart-title">即時全鏈路行銷漏斗轉換率 (Conversion Funnel)</h4>
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>行銷漏斗階段 (Funnel Stage)</th>
+                                <th>受測人數</th>
+                                <th>轉化率狀態 / 2026 行業基準</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="dot dot-blue"></span> 1. 觸達首頁 (Traffic Acquisition)</td>
+                                <td id="table-traffic">-- 人</td>
+                                <td><span class="text-muted">基準點 (100%)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="dot dot-purple"></span> 2. 互動答題 (Lead Engagement)</td>
+                                <td id="table-engagement">-- 人</td>
+                                <td id="table-completion-rate-text" class="text-success">完答率 --</td>
+                            </tr>
+                            <tr>
+                                <td><span class="dot dot-green"></span> 3. 跨站點擊導流 (Action Conversion)</td>
+                                <td id="table-coupon" class="text-highlight">-- 人</td>
+                                <td id="table-ctr-text" class="text-success">點擊率 --</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer-text">
+        © 2026 MarTech 數位消費人格 · MVP Prototype · AI 行銷 / 網路行銷佈局 / 數據決策自動化
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
