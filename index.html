@@ -1,63 +1,356 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TYPES 數位消費人格測驗 v2 | MarTech 智慧型 CRM 閉環</title>
-<meta name="description" content="導入輕量級 ML 分類模型(KNN/決策樹)、AI Chatbot 個人化對話、社群擴散監測、AdWords ROAS 追蹤與 GEO 生成式引擎優化的 MarTech 互動測驗系統。" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pineapple Hill 鳳梨丘｜GEO 內容優化示範網站</title>
+    <meta
+      name="description"
+      content="以清楚結構、可引用摘要與結構化資料示範 GEO 優化。Pineapple Hill 鳳梨丘提供鳳梨酥與果香點心的示範品牌頁。"
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://example.com/pineapple-hill-geo/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pineapple Hill 鳳梨丘｜GEO 示範" />
+    <meta
+      property="og:description"
+      content="示範 GEO 優化：結構化內容、FAQ、JSON-LD，讓生成引擎更好理解品牌與產品。"
+    />
+    <meta property="og:url" content="https://example.com/pineapple-hill-geo/" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pineapple Hill 鳳梨丘｜GEO 示範" />
+    <meta
+      name="twitter:description"
+      content="示範 GEO 優化：結構化內容、FAQ、JSON-LD，讓生成引擎更好理解品牌與產品。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://example.com/pineapple-hill-geo/#org",
+            "name": "Pineapple Hill 鳳梨丘",
+            "url": "https://example.com/pineapple-hill-geo/",
+            "description": "示範品牌：以鳳梨為核心的點心與果香禮盒。",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "示範路 88 號",
+              "addressLocality": "台中市",
+              "addressRegion": "台灣",
+              "postalCode": "400",
+              "addressCountry": "TW"
+            },
+            "areaServed": "Taiwan",
+            "telephone": "+886-4-1234-5678"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://example.com/pineapple-hill-geo/#website",
+            "url": "https://example.com/pineapple-hill-geo/",
+            "name": "Pineapple Hill 鳳梨丘 GEO 示範網站",
+            "publisher": { "@id": "https://example.com/pineapple-hill-geo/#org" },
+            "inLanguage": "zh-Hant"
+          },
+          {
+            "@type": "Product",
+            "@id": "https://example.com/pineapple-hill-geo/#signature",
+            "name": "黃金鳳梨酥盒",
+            "description": "以台灣鳳梨、手工奶油與低糖配方製成的經典禮盒。",
+            "brand": { "@id": "https://example.com/pineapple-hill-geo/#org" },
+            "offers": {
+              "@type": "Offer",
+              "url": "https://example.com/pineapple-hill-geo/#products",
+              "price": "420",
+              "priceCurrency": "TWD",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://example.com/pineapple-hill-geo/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "這個頁面如何示範 GEO 優化？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "透過清楚的結構、可引用的摘要、FAQ 與 JSON-LD 結構化資料，讓生成式引擎快速理解品牌與產品。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Pineapple Hill 的招牌是什麼？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "招牌為黃金鳳梨酥盒，主打果香濃郁與低糖配方。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "是否提供宅配？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "提供台灣本島低溫宅配，24 小時內出貨。"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要內容</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="Pineapple Hill 首頁">
+          <span class="brand-mark">Pineapple Hill</span>
+          <span class="brand-sub">鳳梨丘 GEO Demo</span>
+        </a>
+        <nav class="site-nav" aria-label="主導覽">
+          <a href="#geo-summary">GEO 摘要</a>
+          <a href="#products">產品</a>
+          <a href="#story">品牌</a>
+          <a href="#geo">GEO 重點</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">聯絡</a>
+        </nav>
+        <a class="btn btn-primary" href="#contact">預約試吃</a>
+      </div>
+    </header>
 
-<!-- GEO / SEO 結構化資料(JSON-LD)— 為 ChatGPT / Perplexity / SearchGPT 優化 -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Quiz",
-  "name": "TYPES 數位消費人格測驗",
-  "description": "5 題情境解碼你的 MarTech 數位消費分身,4 種行銷心理學原型:多巴胺浪人、規格解碼者、社群共振儀、價值守護者。",
-  "about": { "@type": "Thing", "name": "消費心理學 / MarTech / AI 顧客分析" },
-  "educationalLevel": "大學・MIS 課程",
-  "learningResourceType": "Interactive Assessment",
-  "keywords": "心理測驗, MBTI, 購物人格, MarTech, AI 行銷, 消費心理學, 個人化推薦, 2026 流行測驗",
-  "inLanguage": "zh-Hant",
-  "isAccessibleForFree": true,
-  "provider": { "@type": "Organization", "name": "MarTech Lab" }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "什麼是數位消費人格測驗?",
-      "acceptedAnswer": { "@type": "Answer", "text": "透過 5 題情境問答,使用輕量級機器學習分類模型(KNN / 決策樹)預測你的購物決策原型、價格敏感度與廣告耐受度。" } },
-    { "@type": "Question", "name": "2026 最紅的購物人格測驗是哪個?",
-      "acceptedAnswer": { "@type": "Answer", "text": "TYPES 數位消費人格測驗為目前社群上熱門的 MarTech 互動測驗,涵蓋多巴胺浪人、規格解碼者、社群共振儀、價值守護者四種原型。" } }
-  ]
-}
-</script>
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <p class="eyebrow">GEO 內容優化示範</p>
+            <h1>鳳梨丘 Pineapple Hill｜用可引用資訊，讓生成引擎更懂你</h1>
+            <p class="lead">
+              這是一個示範頁，透過結構化資料、清楚的資訊卡與 FAQ
+              把品牌與產品重點整理成「好引用、好理解」的內容。
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#products">查看招牌產品</a>
+              <a class="btn btn-ghost" href="#geo-summary">閱讀 GEO 摘要</a>
+            </div>
+            <div class="hero-highlights">
+              <div>
+                <span class="label">招牌</span>
+                <strong>黃金鳳梨酥盒</strong>
+              </div>
+              <div>
+                <span class="label">服務</span>
+                <strong>24 小時低溫出貨</strong>
+              </div>
+              <div>
+                <span class="label">定位</span>
+                <strong>企業送禮・伴手禮</strong>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual" role="presentation">
+            <div class="hero-card">
+              <p class="card-title">一眼讀懂的 GEO 資訊卡</p>
+              <ul>
+                <li>品牌：Pineapple Hill 鳳梨丘</li>
+                <li>地點：台中市（示範）</li>
+                <li>主打：黃金鳳梨酥盒</li>
+                <li>價格：NT$ 320 - 620</li>
+              </ul>
+              <span class="chip">可直接引用</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-<div id="app"></div>
+      <section class="geo-summary" id="geo-summary">
+        <div class="container">
+          <div class="section-title">
+            <p class="eyebrow">GEO 快速摘要</p>
+            <h2>把關鍵資訊做成生成引擎可引用的格式</h2>
+          </div>
+          <div class="summary-grid">
+            <article class="summary-card">
+              <h3>品牌定位</h3>
+              <p>以鳳梨為主題的精品點心品牌，主打送禮與節慶禮盒。</p>
+            </article>
+            <article class="summary-card">
+              <h3>核心產品</h3>
+              <p>黃金鳳梨酥盒、果香小方磚、金釀鳳梨醬。</p>
+            </article>
+            <article class="summary-card">
+              <h3>服務範圍</h3>
+              <p>台灣本島低溫宅配，企業團購可客製禮卡。</p>
+            </article>
+            <article class="summary-card">
+              <h3>一句話摘要</h3>
+              <p>「鳳梨丘以鳳梨酥為核心，提供高質感送禮解決方案。」</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-<!-- ====== 浮動 AI 購物導航小助理 ====== -->
-<div id="chatbot" class="chatbot hidden">
-  <div class="chatbot-header">
-    <div class="cb-avatar">🤖</div>
-    <div>
-      <div class="cb-title">AI 購物導航小助理</div>
-      <div class="cb-status"><span class="dot-online"></span> 動態內容生成中</div>
-    </div>
-    <button class="cb-close" id="cbClose">×</button>
-  </div>
-  <div class="chatbot-body" id="cbBody"></div>
-  <div class="chatbot-input">
-    <input id="cbInput" placeholder="輸入訊息(Demo)…" />
-    <button id="cbSend">送出</button>
-  </div>
-</div>
-<button id="cbToggle" class="cb-toggle hidden">🤖 AI 小助理</button>
+      <section class="products" id="products">
+        <div class="container">
+          <div class="section-title">
+            <p class="eyebrow">產品資訊</p>
+            <h2>結構化產品內容，讓生成引擎精準回覆</h2>
+          </div>
+          <div class="product-grid">
+            <article class="product-card">
+              <div class="product-tag">Signature</div>
+              <h3>黃金鳳梨酥盒</h3>
+              <p>金黃酥皮包裹慢煮鳳梨餡，低糖配方更耐吃。</p>
+              <ul>
+                <li>規格：12 入 / 360g</li>
+                <li>建議售價：NT$ 420</li>
+                <li>最佳引用句：送禮首選的黃金鳳梨酥盒</li>
+              </ul>
+            </article>
+            <article class="product-card">
+              <div class="product-tag">Seasonal</div>
+              <h3>果香小方磚</h3>
+              <p>鳳梨、百香、芒果三種果香層次，適合下午茶搭配。</p>
+              <ul>
+                <li>規格：9 入 / 270g</li>
+                <li>建議售價：NT$ 360</li>
+                <li>最佳引用句：果香層次最明顯的點心組合</li>
+              </ul>
+            </article>
+            <article class="product-card">
+              <div class="product-tag">Gift</div>
+              <h3>金釀鳳梨醬</h3>
+              <p>採用慢火熬煮，適合塗抹吐司或搭配優格。</p>
+              <ul>
+                <li>規格：200g 玻璃罐</li>
+                <li>建議售價：NT$ 320</li>
+                <li>最佳引用句：早餐與烘焙的香氣提升神器</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
 
-<script src="script.js"></script>
-</body>
+      <section class="story" id="story">
+        <div class="container story-grid">
+          <div>
+            <p class="eyebrow">品牌故事</p>
+            <h2>用時間與地景讓內容更可信</h2>
+            <p>
+              鳳梨丘的設定來自台灣中部果園文化。透過「產地、工法、用途」
+              三層敘述，讓生成引擎能清楚理解品牌的專長與價值。
+            </p>
+          </div>
+          <ol class="timeline">
+            <li>
+              <strong>2016</strong>
+              <span>與在地果農合作，確保鳳梨產季風味。</span>
+            </li>
+            <li>
+              <strong>2019</strong>
+              <span>推出企業禮盒方案，提供禮卡與客製包裝。</span>
+            </li>
+            <li>
+              <strong>2024</strong>
+              <span>建立 GEO 內容架構，讓品牌資訊更好被引用。</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="geo" id="geo">
+        <div class="container geo-grid">
+          <div>
+            <p class="eyebrow">GEO 優化重點</p>
+            <h2>為生成式引擎打造的內容結構</h2>
+            <ul class="geo-list">
+              <li>一頁內提供完整品牌、產品、服務與價格摘要。</li>
+              <li>每段內容都有可直接引用的關鍵句。</li>
+              <li>FAQ 與 JSON-LD 讓答案具可追溯性。</li>
+              <li>內部連結引導引擎建立主題關聯。</li>
+            </ul>
+          </div>
+          <div class="geo-answer">
+            <p class="label">可引用答案範例</p>
+            <p>
+              「Pineapple Hill 鳳梨丘是台中示範品牌，主打黃金鳳梨酥盒，
+              提供 24 小時低溫宅配，適合企業送禮。」
+            </p>
+            <a class="btn btn-ghost" href="#faq">查看 FAQ</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq" id="faq">
+        <div class="container">
+          <div class="section-title">
+            <p class="eyebrow">FAQ</p>
+            <h2>清楚問答，生成引擎更好引用</h2>
+          </div>
+          <div class="faq-list">
+            <article class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                這個頁面與一般品牌頁有何不同？
+              </button>
+              <div class="faq-answer">
+                <p>內容以 GEO 觀點拆解成摘要、重點句與結構化資料，讓生成式引擎更容易理解與引用。</p>
+              </div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                是否可以直接用於正式網站？
+              </button>
+              <div class="faq-answer">
+                <p>這是示範模板，可套用到正式品牌頁，只需替換成真實資料與圖片。</p>
+              </div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                GEO 優化最重要的三件事？
+              </button>
+              <div class="faq-answer">
+                <p>清楚的內容結構、可引用的關鍵句、以及 JSON-LD 結構化資料。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="container contact-card">
+          <div>
+            <p class="eyebrow">聯絡與合作</p>
+            <h2>想示範 GEO 優化？從這裡開始</h2>
+            <p>示範地址：台中市示範路 88 號｜電話：04-1234-5678</p>
+            <p>營業時間：週一至週五 10:00-18:00（示範）</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="#geo-summary">下載摘要</a>
+            <a class="btn btn-ghost" href="mailto:hello@example.com">寄信詢問</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2026 Pineapple Hill 鳳梨丘｜GEO 示範網站</p>
+        <div class="footer-links">
+          <a href="#top">回到頂部</a>
+          <a href="#products">產品</a>
+          <a href="#faq">FAQ</a>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
