@@ -1,6 +1,7 @@
 /* =========================================================
    TYPES 數位消費人格測驗 v2 — MarTech 智慧型 CRM 閉環
    新增:KNN/決策樹模擬、AdWords ROAS、決策矩陣、社群擴散監測、AI Chatbot
+   (已加入報告專用：一鍵清空數據功能)
 ========================================================= */
 
 // ---------- 資料 ----------
@@ -76,6 +77,17 @@ const state = {
   selectedIdx:null, locked:false, loadStep:0,
   completions:892, jumpClicks:324, heroIdx:0,
 };
+
+// ===== 新增：一鍵清空數據功能 =====
+function clearData() {
+  if(confirm("⚠️ 確定要清空所有測試數據嗎？\n這將會把儀表板上的「完成數」與「跨站點擊數」全部歸零，方便您進行現場 Live 測試。")) {
+    state.completions = 0;
+    state.jumpClicks = 0;
+    alert("✅ 數據已成功歸零！請開始您的真實測試。");
+    render(); // 重新整理畫面
+  }
+}
+
 const personaOrder = ["rational","impulse","social","loyal"];
 const app = document.getElementById("app");
 
@@ -296,80 +308,73 @@ function copyCoupon(){
     setTimeout(()=>{b.innerHTML='<span class="dot"></span>領取專屬優惠序號';b.style.background="";},2200);}
 }
 
-//============= AI Chatbot (精進對話與個人化品牌導購模組) =============
+// ============= AI Chatbot =============
 const cbScripts = {
-  impulse:[{role:"bot",text:"哈囉浪人 🌊！跟我說你想「買衣服/化妝品/3C」，我會依據你的多巴胺屬性推薦最適合的品牌！"}],
-  rational:[{role:"bot",text:"哈囉 🦉，理性如你。請告訴我你想「買什麼類型的商品」，我會用最高 CP 值的標準為你分析品牌！"}],
-  social:[{role:"bot",text:"🦄 嗨！話題製造機。想買「服飾/保養/酷東西」嗎？輸入商品，我推給你網路上討論度最高的品牌！"}],
-  loyal:[{role:"bot",text:"🕊️ 哈囉，價值守護者。想購買什麼呢？請輸入商品類別，我會為你挑選具備永續理念或深度故事的品牌！"}],
+  impulse:[
+    {role:"bot",text:"哈囉浪人 🌊!偵測到你正進入多巴胺活躍期 ✨"},
+    {role:"bot",text:"⏰ 限時快閃倒數:你的命定包包只剩最後 3 件!"},
+    {role:"bot",text:"點下方 👉 5 秒內帶走多巴胺快樂,折扣碼已自動填入。"} ],
+  rational:[
+    {role:"bot",text:"哈囉 🦉,我已為你比對 7 家通路。"},
+    {role:"spec",text:"規格比較",spec:[
+      ["商品","WH-1000XM5"],["最低價","NT$ 9,490 (PChome)"],
+      ["保固","12 個月原廠"],["評價","4.7/5 · 12,431 則"],["CP 值","★★★★☆"]]},
+    {role:"bot",text:"以上為硬核數據,無情緒包裝,請理性決策。"} ],
+  social:[
+    {role:"bot",text:"🦄 嗨!你的限動受眾正在等你開箱~"},
+    {role:"bot",text:"📸 推薦 CASETiFY × Hello Kitty 聯名款 (IG 討論度 +320%)"},
+    {role:"bot",text:"分享此頁到 IG 限動,自動再 +5% 折扣 🎁"} ],
+  loyal:[
+    {role:"bot",text:"🕊️ 哈囉,為你準備了一個有溫度的故事。"},
+    {role:"bot",text:"綠藤生機・每一瓶都來自台灣有機農場,通過 B Corp 認證。"},
+    {role:"bot",text:"購買即捐 3% 至「海洋廢棄物清除計畫」。"} ],
 };
-
 function showChatbot(){
-  const t = winnerType(); const cb = document.getElementById("chatbot"); const body = document.getElementById("cbBody");
-  body.innerHTML=""; cbScripts[t].forEach((m,i)=>setTimeout(()=>{ body.append(h("div",{class:"msg "+m.role},m.text)); body.scrollTop=body.scrollHeight; },i*500));
-  cb.classList.remove("hidden"); document.getElementById("cbToggle").classList.add("hidden");
+  const t = winnerType();
+  const cb = document.getElementById("chatbot");
+  const body = document.getElementById("cbBody");
+  const toggle = document.getElementById("cbToggle");
+  body.innerHTML="";
+  cbScripts[t].forEach((m,i)=>setTimeout(()=>{
+    const el = h("div",{class:"msg "+m.role},m.text);
+    if(m.role==="spec"&&m.spec){
+      const tbl = h("table",{});
+      m.spec.forEach(r=>tbl.append(h("tr",{},h("td",{},r[0]),h("td",{},r[1]))));
+      el.append(tbl);
+    }
+    body.append(el); body.scrollTop=body.scrollHeight;
+  },i*700));
+  cb.classList.remove("hidden");
+  toggle.classList.add("hidden");
 }
-document.getElementById("cbClose").onclick=()=>{ document.getElementById("chatbot").classList.add("hidden"); document.getElementById("cbToggle").classList.remove("hidden"); };
+document.getElementById("cbClose").onclick=()=>{
+  document.getElementById("chatbot").classList.add("hidden");
+  document.getElementById("cbToggle").classList.remove("hidden");
+};
 document.getElementById("cbToggle").onclick=()=>showChatbot();
 document.getElementById("cbSend").onclick=cbSend;
 document.getElementById("cbInput").addEventListener("keydown",e=>{if(e.key==="Enter")cbSend();});
-
 function cbSend(){
-  const inp = document.getElementById("cbInput"); const txt = inp.value.trim(); if(!txt)return;
-  const body = document.getElementById("cbBody"); body.append(h("div",{class:"msg user"},txt)); inp.value="";
-  
-  const t = winnerType(); const p = PERSONAS[t];
-  
+  const inp = document.getElementById("cbInput");
+  const txt = inp.value.trim(); if(!txt)return;
+  const body = document.getElementById("cbBody");
+  body.append(h("div",{class:"msg user"},txt));
+  inp.value="";
   setTimeout(()=>{
-    let reply = "";
-    const upperTxt = txt.toUpperCase();
-
-    // 1. 行銷知識庫意圖
-    if(upperTxt.includes("GEO")) reply = "🤖 GEO (生成式引擎優化) 是 2024-2026 最新趨勢！讓 AI 主動在回答中「推薦」你的品牌。";
-    else if(upperTxt.includes("SEO")||upperTxt.includes("SEM")) reply = "🤖 SEO 是佈局關鍵字獲取免費流量；SEM 是買關鍵字廣告。兩者搭配是最強的搜尋行銷！";
-    else if(txt.includes("再行銷")||upperTxt.includes("RETARGETING")) reply = "🤖 再行銷 (Retargeting) 是追蹤足跡並在網頁上「追著你」投廣告，對【多巴胺浪人】超級有效！";
-    
-    // 2. 購物與品牌精準推薦意圖 (結合四大消費人格)
-    else if(txt.includes("衣服") || txt.includes("穿搭") || txt.includes("包包") || txt.includes("鞋")) {
-        if(t==="impulse") reply = "🛍️ 推薦 <strong>ZARA</strong> 或是 <strong>Charles & Keith (小CK)</strong>！快時尚的新品更新速度與高顏值設計，絕對能滿足你的多巴胺！現在還有季末快閃優惠喔。";
-        else if(t==="rational") reply = "🛍️ 推薦 <strong>UNIQLO</strong> 或是 <strong>Lativ</strong>。材質標示清楚、百搭耐穿，CP 值極高，完全符合你的效益考量。";
-        else if(t==="social") reply = "🛍️ 推薦 IG 爆紅的 <strong>PAZZO</strong>、<strong>STUDIO DOE</strong> 或 <strong>D+AF</strong>。穿去網美咖啡廳打卡絕對吸睛，是最好的社交貨幣！";
-        else reply = "🛍️ 推薦 <strong>Patagonia</strong> 或台灣在地的 <strong>Story Wear 零廢棄時尚</strong>。強調公平貿易與永續環保材質，能與你的理念深度共鳴！";
-    } 
-    else if (txt.includes("保養") || txt.includes("化妝") || txt.includes("香水") || txt.includes("美妝")) {
-        if(t==="impulse") reply = "💄 推薦 <strong>YSL</strong> 或 <strong>Jo Malone</strong>！絕美的限量包裝與專屬刻字服務，讓你拆開瞬間多巴胺狂飆！";
-        else if(t==="rational") reply = "🧴 理性派不繳智商稅！推薦 <strong>The Ordinary</strong> 或 <strong>寶拉珍選 (Paula's Choice)</strong>，活性成分與濃度全透明，實測效果最好。";
-        else if(t==="social") reply = "✨ 作為口碑節點，推薦你 Dcard / Threads 上討論度最高的 <strong>Aesop</strong> 或是 <strong>赫蓮娜 (HR) 綠寶瓶</strong>，發限動超有面子！";
-        else reply = "🌿 【價值守護者】首選！推薦台灣的 <strong>綠藤生機</strong> 或是堅持無動物實驗的 <strong>The Body Shop</strong>，純淨保養最適合你！";
-    } 
-    else if (txt.includes("3C") || txt.includes("手機") || txt.includes("耳機") || txt.includes("電腦") || txt.includes("相機")) {
-        if(t==="impulse") reply = "🎧 推薦 <strong>Marshall 藍牙音響</strong> 或 <strong>Nothing Phone</strong>！極具未來感與復古美學的特殊設計，最能滿足你的視覺癖。";
-        else if(t==="rational") reply = "💻 買 3C 唯一推薦 <strong>PChome 24h</strong> 或是 <strong>Apple 官方翻新機</strong>。價格透明、規格齊全，買之前記得去 Mobile01 爬一下實測喔！";
-        else if(t==="social") reply = "📸 話題製造機就是你！推薦 <strong>CASETiFY 聯名手機殼</strong> 或是 <strong>Fujifilm 拍立得相機</strong>，帶出門就是全場焦點。";
-        else reply = "🔋 推薦模組化環保手機 <strong>Fairphone</strong>，或是選購標榜 100% 碳中和的 <strong>Apple Watch</strong>，減少電子垃圾與碳足跡。";
-    } 
-    else if (txt.includes("買") || txt.includes("推薦") || txt.includes("品牌")) {
-        reply = `🤖 沒問題！身為「${p.title}」，請告訴我你具體想買什麼？(例如：衣服、化妝品、耳機、鞋子) 我會幫你挑出最搭的品牌！`;
-    }
-    // 3. 預設回覆
-    else {
-        reply = `🤖 收到！你可以問我行銷知識 (GEO/SEO)，或直接告訴我你想「買衣服 / 買保養品 / 買3C」，我會依照你的【${p.ip}】屬性推薦專屬品牌喔！`;
-    }
-
-    // 為了渲染 <strong> 粗體標籤，使用 innerHTML 加入節點
-    const botMsg = h("div",{class:"msg bot"});
-    botMsg.innerHTML = reply;
-    body.append(botMsg);
+    body.append(h("div",{class:"msg bot"},"✨ (Demo) 動態內容生成中:已記錄此偏好,將用於下一次個人化推薦。"));
     body.scrollTop=body.scrollHeight;
-  }, 600);
+  },500);
+  body.scrollTop=body.scrollHeight;
 }
 
 // ============= Dashboard =============
 function renderDashboard(){
   const t = winnerType();
   const p = PERSONAS[t];
-  const completionRate = ((state.completions/(state.completions+412))*100).toFixed(1);
-  const jumpRate = ((state.jumpClicks/state.completions)*100).toFixed(1);
+  
+  // 防止分母為 0 出現 NaN 錯誤
+  const completionRate = state.completions === 0 ? "0.0" : ((state.completions/(state.completions+412))*100).toFixed(1);
+  const jumpRate = state.completions === 0 ? "0.0" : ((state.jumpClicks/state.completions)*100).toFixed(1);
   const couponRate = 36.0;
 
   const aside = h("aside",{},
@@ -384,11 +389,13 @@ function renderDashboard(){
       h("button",{},"🤖 AI 洞察"),
       h("button",{},"⚙ 設定")));
 
+  // 修改 Top Bar，加入紅色的清空數據按鈕
   const top = h("div",{class:"dash-top"},
     h("div",{},
       h("h1",{},"企業總覽 · 智慧型 CRM 閉環"),
       h("div",{style:"font-size:12px;color:#7b8299;margin-top:4px"},"最後同步:剛剛 · 數據範圍:近 7 日")),
     h("div",{class:"actions"},
+      h("button",{style:"color:#ef4444; border-color:#ef4444; font-weight:bold;", onclick:clearData},"🗑️ 清空數據"),
       h("button",{},"📅 近 7 日"),h("button",{},"⬇ 匯出 CSV"),
       h("button",{class:"primary",onclick:()=>{state.screen="welcome";render();}},"← 返回前端")));
 
@@ -421,7 +428,7 @@ function renderDashboard(){
       roasCell("點擊數","8,341",""),
       roasCell("CPC","NT$ 3.2","warn"),
       roasCell("CPA","NT$ 41","good"),
-      roasCell("領券完成","892",""),
+      roasCell("領券完成", state.completions.toLocaleString(), ""), // 這裡連動 state 的真實數據
       roasCell("營收歸因","NT$ 142,720","good"),
       roasCell("ROAS","389%","good"),
       roasCell("廣告預算","NT$ 36,720","")));
